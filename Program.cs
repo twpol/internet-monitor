@@ -12,8 +12,8 @@ namespace Internet_Monitor
             monitor.RaiseEvent += (sender, data) => Console.WriteLine(data.Json);
             while (true)
             {
+                Thread.Sleep(60000 - (int)(DateTimeOffset.Now.ToUnixTimeMilliseconds() % 60000));
                 monitor.Execute();
-                Thread.Sleep(60000);
             }
         }
     }
