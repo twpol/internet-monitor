@@ -61,6 +61,7 @@ namespace Internet_Monitor
             {
                 var network = GetNetwork(ip);
                 var data = new Dictionary<string, object> {
+                        { "time", DateTimeOffset.UtcNow.ToString("u").Replace(' ', 'T') },
                         { "meta.local_hostname", Dns.GetHostName() },
                         { "meta.local_network", network?.Name },
                         { "meta.local_error", GetNetworkError(network) },
