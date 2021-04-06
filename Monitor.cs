@@ -63,6 +63,7 @@ namespace Internet_Monitor
                 var data = new Dictionary<string, object> {
                         { "meta.local_hostname", Dns.GetHostName() },
                         { "meta.local_network", network?.Name },
+                        { "meta.local_error", GetNetworkError(network) },
                         { "meta.local_connection", GetNetworkName(network) },
                         { "meta.local_channel", GetNetworkChannel(network) },
                         { "meta.local_strength", GetNetworkStrength(network) },
@@ -126,6 +127,11 @@ namespace Internet_Monitor
             return WifiNetworkForNetwork[network.Id];
         }
 
+        string GetNetworkError(NetworkInterface network)
+        {
+            return GetWifiNetwork(network)?.Error;
+        }
+
         string GetNetworkName(NetworkInterface network)
         {
             return GetWifiNetwork(network)?.SSID ?? network?.Name;
@@ -152,15 +158,23 @@ namespace Internet_Monitor
             public readonly PhysicalAddress BSSID;
             public readonly uint SignalStrength;
             public readonly int Channel;
+            public readonly string Error;
 
             public WifiNetworkInterface(WlanInterface wlan)
             {
                 var connection = wlan.CurrentConnection;
 
+                try
+                {
                 SSID = connection.profileName;
                 BSSID = connection.wlanAssociationAttributes.Dot11Bssid;
                 SignalStrength = connection.wlanAssociationAttributes.wlanSignalQuality;
-                Channel = wlan.Channel;
+                    Channel = wlan.Channel; // System.ComponentModel.Win32Exception (22): The device does not recognize the command.
+                }
+                catch (Exception error)
+                {
+                    Error = error.Message + "\n" + error.StackTrace;
+                }
             }
         }
 
