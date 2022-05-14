@@ -167,9 +167,9 @@ namespace Internet_Monitor
 
                 try
                 {
-                SSID = connection.profileName;
-                BSSID = connection.wlanAssociationAttributes.Dot11Bssid;
-                SignalStrength = connection.wlanAssociationAttributes.wlanSignalQuality;
+                    SSID = connection.profileName;
+                    BSSID = connection.wlanAssociationAttributes.Dot11Bssid;
+                    SignalStrength = connection.wlanAssociationAttributes.wlanSignalQuality;
                     Channel = wlan.Channel; // System.ComponentModel.Win32Exception (22): The device does not recognize the command.
                 }
                 catch (Exception error)
