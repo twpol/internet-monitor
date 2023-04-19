@@ -163,10 +163,9 @@ namespace Internet_Monitor
 
             public WifiNetworkInterface(WlanInterface wlan)
             {
-                var connection = wlan.CurrentConnection;
-
                 try
                 {
+                    var connection = wlan.CurrentConnection;
                     SSID = connection.profileName;
                     BSSID = connection.wlanAssociationAttributes.Dot11Bssid;
                     SignalStrength = connection.wlanAssociationAttributes.wlanSignalQuality;
