@@ -1,3 +1,3 @@
 # Internet Monitor
 
-Command-line utility which records the status of internet access.
+Service for recording the status of internet access.
